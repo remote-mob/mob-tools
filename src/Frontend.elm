@@ -13,8 +13,10 @@ import Url
 type alias Model =
     FrontendModel
 
+
 type alias Msg =
     FrontendMsg
+
 
 app =
     Lamdera.frontend
@@ -42,7 +44,6 @@ update msg model =
             ( model, Lamdera.sendToBackend msgToSend )
     in
     case msg of
-
         NoOpFrontendMsg ->
             ( model, Cmd.none )
 

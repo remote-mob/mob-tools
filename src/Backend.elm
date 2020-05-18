@@ -4,13 +4,16 @@ import Html
 import Lamdera exposing (ClientId, SessionId)
 import Time
 import Types exposing (..)
+import Timer exposing (..)
 
 
 type alias Model =
     BackendModel
 
+
 type alias Msg =
     BackendMsg
+
 
 app =
     Lamdera.backend
@@ -25,12 +28,14 @@ subscriptions model =
     Time.every 1000 (always Tick)
 
 
+newTimer =
+    Stoped (60 * 6)
+
+
 init : ( Model, Cmd Msg )
 init =
-    ( { secondsRemaining = 0
-      , timerLengthInSeconds = 60 * 6
+    ( { timer = newTimer
       , clientIds = []
-      , isActive = False
       }
     , Cmd.none
     )
@@ -49,55 +54,58 @@ sendToMany msg ids =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
-        secondsRemaining =
-            model.secondsRemaining - 1
-
         doNothing =
             ( model, Cmd.none )
     in
     case msg of
         Tick ->
-            if model.isActive then
-                ( { model | secondsRemaining = secondsRemaining }
-                , sendToMany
-                    (SecondsRemainingToFrontend secondsRemaining)
-                    model.clientIds
-                )
+            case model.timer of
+                Stoped _ ->
+                    doNothing
 
-            else
-                doNothing
+                Started seconds ->
+                    let
+                        secondsRemaining =
+                            seconds - 1
+                    in
+                    ( { model | timer = Started secondsRemaining }
+                    , sendToMany
+                        (SecondsRemainingToFrontend secondsRemaining)
+                        model.clientIds
+                    )
 
 
 updateFromFrontend : SessionId -> ClientId -> ToBackend -> Model -> ( Model, Cmd Msg )
 updateFromFrontend sessionId clientId msg model =
+    let
+        secondsRemaining =
+            getSeconds model.timer
+    in
     case msg of
         Connect ->
             ( { model | clientIds = clientId :: model.clientIds }
             , Lamdera.sendToFrontend
                 clientId
-                (SecondsRemainingToFrontend model.secondsRemaining)
+                (SecondsRemainingToFrontend secondsRemaining)
             )
 
         ResetTimerBackend ->
             let
                 nextModel =
-                    { model
-                        | secondsRemaining = model.timerLengthInSeconds
-                        , isActive = False
-                    }
+                    { model | timer = newTimer }
             in
             ( nextModel
             , sendToMany
-                (SecondsRemainingToFrontend nextModel.secondsRemaining)
+                (SecondsRemainingToFrontend <| getSeconds nextModel.timer)
                 nextModel.clientIds
             )
 
         StartTimerBackend ->
-            ( { model | isActive = True }
+            ( { model | timer = start model.timer }
             , Cmd.none
             )
 
         StopTimerBackend ->
-            ( { model | isActive = False }
+            ( { model | timer = stop model.timer }
             , Cmd.none
             )

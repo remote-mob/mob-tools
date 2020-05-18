@@ -4,6 +4,7 @@ import Browser exposing (UrlRequest)
 import Browser.Navigation exposing (Key)
 import Lamdera
 import Url exposing (Url)
+import Timer exposing (..)
 
 
 type alias FrontendModel =
@@ -12,10 +13,8 @@ type alias FrontendModel =
 
 
 type alias BackendModel =
-    { secondsRemaining : Int
-    , isActive : Bool
+    { timer : Timer
     , clientIds : List Lamdera.ClientId
-    , timerLengthInSeconds : Int
     }
 
 
