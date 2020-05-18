@@ -7,8 +7,7 @@ import Url exposing (Url)
 
 
 type alias FrontendModel =
-    { key : Key
-    , secondsRemaining : Int
+    { secondsRemaining : Int
     }
 
 
@@ -21,9 +20,7 @@ type alias BackendModel =
 
 
 type FrontendMsg
-    = UrlClicked UrlRequest
-    | UrlChanged Url
-    | NoOpFrontendMsg
+    = NoOpFrontendMsg
     | ResetTimer
     | StartTimer
     | StopTimer

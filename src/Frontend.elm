@@ -17,8 +17,8 @@ type alias Model =
 app =
     Lamdera.frontend
         { init = init
-        , onUrlRequest = UrlClicked
-        , onUrlChange = UrlChanged
+        , onUrlRequest = always NoOpFrontendMsg
+        , onUrlChange = always NoOpFrontendMsg
         , update = update
         , updateFromBackend = updateFromBackend
         , subscriptions = \m -> Sub.none
@@ -28,9 +28,7 @@ app =
 
 init : Url.Url -> Nav.Key -> ( Model, Cmd FrontendMsg )
 init url key =
-    ( { key = key
-      , secondsRemaining = 0
-      }
+    ( { secondsRemaining = 0 }
     , Lamdera.sendToBackend Connect
     )
 
@@ -42,20 +40,6 @@ update msg model =
             ( model, Lamdera.sendToBackend msgToSend )
     in
     case msg of
-        UrlClicked urlRequest ->
-            case urlRequest of
-                Internal url ->
-                    ( model
-                    , Cmd.batch [ Nav.pushUrl model.key (Url.toString url) ]
-                    )
-
-                External url ->
-                    ( model
-                    , Nav.load url
-                    )
-
-        UrlChanged url ->
-            ( model, Cmd.none )
 
         NoOpFrontendMsg ->
             ( model, Cmd.none )
