@@ -75,13 +75,17 @@ updateFromFrontend sessionId clientId msg model =
             )
 
         ResetTimerBackend ->
-            ( { model
-                | secondsRemaining = model.timerLengthInSeconds
-                , isActive = False
-              }
+            let
+                nextModel =
+                    { model
+                        | secondsRemaining = model.timerLengthInSeconds
+                        , isActive = False
+                    }
+            in
+            ( nextModel
             , sendToMany
-                (SecondsRemainingToFrontend model.timerLengthInSeconds)
-                model.clientIds
+                (SecondsRemainingToFrontend nextModel.secondsRemaining)
+                nextModel.clientIds
             )
 
         StartTimerBackend ->
