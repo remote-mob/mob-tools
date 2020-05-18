@@ -9,6 +9,8 @@ import Types exposing (..)
 type alias Model =
     BackendModel
 
+type alias Msg =
+    BackendMsg
 
 app =
     Lamdera.backend
@@ -23,7 +25,7 @@ subscriptions model =
     Time.every 1000 (always Tick)
 
 
-init : ( Model, Cmd BackendMsg )
+init : ( Model, Cmd Msg )
 init =
     ( { secondsRemaining = 0
       , timerLengthInSeconds = 60 * 6
@@ -44,7 +46,7 @@ sendToMany msg ids =
         |> Cmd.batch
 
 
-update : BackendMsg -> Model -> ( Model, Cmd BackendMsg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
         secondsRemaining =
@@ -66,7 +68,7 @@ update msg model =
                 doNothing
 
 
-updateFromFrontend : SessionId -> ClientId -> ToBackend -> Model -> ( Model, Cmd BackendMsg )
+updateFromFrontend : SessionId -> ClientId -> ToBackend -> Model -> ( Model, Cmd Msg )
 updateFromFrontend sessionId clientId msg model =
     case msg of
         Connect ->
