@@ -25,7 +25,8 @@ subscriptions model =
 
 init : ( Model, Cmd BackendMsg )
 init =
-    ( { secondsRemaining = 60
+    ( { secondsRemaining = 0
+      , timerLengthInSeconds = 60
       , clientIds = []
       }
     , Cmd.none
@@ -60,4 +61,4 @@ updateFromFrontend sessionId clientId msg model =
             )
 
         ResetTimerBackend ->
-            ( { model | secondsRemaining = 60 }, Cmd.none )
+            ( { model | secondsRemaining = model.timerLengthInSeconds }, Cmd.none )
