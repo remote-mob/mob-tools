@@ -14,7 +14,7 @@ type alias FrontendModel =
 
 type alias BackendModel =
     { secondsRemaining : Int
-    , isActive: Bool
+    , isActive : Bool
     , clientIds : List Lamdera.ClientId
     , timerLengthInSeconds : Int
     }

@@ -77,7 +77,22 @@ updateFromBackend msg model =
             ( { model | message = "got message" }, Cmd.none )
 
         SecondsRemainingToFrontend seconds ->
-            ( { model | message = String.fromInt seconds }, Cmd.none )
+            ( { model | message = showTime seconds }, Cmd.none )
+
+
+showTime : Int -> String
+showTime totalSeconds =
+    let
+        seconds =
+            modBy 60 totalSeconds
+
+        minutes =
+            totalSeconds // 60
+    in
+    [ minutes, seconds ]
+        |> List.map String.fromInt
+        |> List.map (String.padLeft 2 '0')
+        |> String.join ":"
 
 
 view model =
