@@ -26,7 +26,7 @@ subscriptions model =
 init : ( Model, Cmd BackendMsg )
 init =
     ( { secondsRemaining = 0
-      , timerLengthInSeconds = 60
+      , timerLengthInSeconds = 60 * 6
       , clientIds = []
       , isActive = False
       }

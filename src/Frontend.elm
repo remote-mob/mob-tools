@@ -29,7 +29,7 @@ app =
 init : Url.Url -> Nav.Key -> ( Model, Cmd FrontendMsg )
 init url key =
     ( { key = key
-      , message = ""
+      , secondsRemaining = 0
       }
     , Lamdera.sendToBackend Connect
     )
@@ -74,10 +74,10 @@ updateFromBackend : ToFrontend -> Model -> ( Model, Cmd FrontendMsg )
 updateFromBackend msg model =
     case msg of
         NoOpToFrontend ->
-            ( { model | message = "Connected" }, Cmd.none )
+            ( model, Cmd.none )
 
         SecondsRemainingToFrontend seconds ->
-            ( { model | message = showTime seconds }, Cmd.none )
+            ( { model | secondsRemaining = seconds }, Cmd.none )
 
 
 showTime : Int -> String
@@ -95,16 +95,30 @@ showTime totalSeconds =
         |> String.join ":"
 
 
+view : Model -> Browser.Document FrontendMsg
 view model =
+    let
+        audio =
+            if model.secondsRemaining < 0 then
+                [ Html.audio
+                    [ Attr.src "blop.mp3"
+                    , Attr.autoplay True
+                    ]
+                    []
+                ]
+
+            else
+                []
+    in
     { title = ""
     , body =
         [ Html.div [ Attr.style "text-align" "center", Attr.style "padding-top" "40px" ]
-            [ Html.div
+            ([ Html.div
                 [ Attr.style "font-family" "sans-serif"
                 , Attr.style "padding" "40px"
                 , Attr.style "font-size" "xxx-large"
                 ]
-                [ Html.text model.message ]
+                [ Html.text <| showTime model.secondsRemaining ]
             , Html.button
                 [ Event.onClick StartTimer ]
                 [ Html.text "Start" ]
@@ -114,6 +128,6 @@ view model =
             , Html.button
                 [ Event.onClick ResetTimer ]
                 [ Html.text "Reset" ]
-            ]
+            ] ++ audio)
         ]
     }
