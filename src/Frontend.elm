@@ -84,15 +84,23 @@ showTime : Int -> String
 showTime totalSeconds =
     let
         seconds =
-            modBy 60 totalSeconds
+            remainderBy 60 totalSeconds
 
         minutes =
             totalSeconds // 60
+
+        sign =
+            if totalSeconds > 0 then
+                ""
+
+            else
+                "-"
     in
-    [ minutes, seconds ]
+    [ abs minutes, abs seconds ]
         |> List.map String.fromInt
         |> List.map (String.padLeft 2 '0')
         |> String.join ":"
+        |> (++) sign
 
 
 view : Model -> Browser.Document FrontendMsg
@@ -119,15 +127,17 @@ view model =
                 , Attr.style "font-size" "xxx-large"
                 ]
                 [ Html.text <| showTime model.secondsRemaining ]
-            , Html.button
+             , Html.button
                 [ Event.onClick StartTimer ]
                 [ Html.text "Start" ]
-            , Html.button
+             , Html.button
                 [ Event.onClick StopTimer ]
                 [ Html.text "Stop" ]
-            , Html.button
+             , Html.button
                 [ Event.onClick ResetTimer ]
                 [ Html.text "Reset" ]
-            ] ++ audio)
+             ]
+                ++ audio
+            )
         ]
     }
