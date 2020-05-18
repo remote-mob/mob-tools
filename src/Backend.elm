@@ -25,8 +25,7 @@ subscriptions model =
 
 init : ( Model, Cmd BackendMsg )
 init =
-    ( { message = "Hello!"
-      , secondsRemaining = 60
+    ( { secondsRemaining = 60
       , clientIds = []
       }
     , Cmd.none
@@ -59,3 +58,6 @@ updateFromFrontend sessionId clientId msg model =
             ( { model | clientIds = clientId :: model.clientIds }
             , Lamdera.sendToFrontend clientId NoOpToFrontend
             )
+
+        ResetTimerBackend ->
+            ( { model | secondsRemaining = 60 }, Cmd.none )

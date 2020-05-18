@@ -4,6 +4,7 @@ import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
 import Html
 import Html.Attributes as Attr
+import Html.Events as Event
 import Lamdera
 import Types exposing (..)
 import Url
@@ -55,6 +56,9 @@ update msg model =
         NoOpFrontendMsg ->
             ( model, Cmd.none )
 
+        ResetTimer ->
+            ( model, Lamdera.sendToBackend ResetTimerBackend )
+
 
 updateFromBackend : ToFrontend -> Model -> ( Model, Cmd FrontendMsg )
 updateFromBackend msg model =
@@ -76,6 +80,9 @@ view model =
                 , Attr.style "padding-top" "40px"
                 ]
                 [ Html.text model.message ]
+            , Html.button
+                [ Event.onClick ResetTimer ]
+                [ Html.text "reset" ]
             ]
         ]
     }

@@ -13,8 +13,7 @@ type alias FrontendModel =
 
 
 type alias BackendModel =
-    { message : String
-    , secondsRemaining : Int
+    { secondsRemaining : Int
     , clientIds : List Lamdera.ClientId
     }
 
@@ -23,10 +22,12 @@ type FrontendMsg
     = UrlClicked UrlRequest
     | UrlChanged Url
     | NoOpFrontendMsg
+    | ResetTimer
 
 
 type ToBackend
     = NoOpToBackend
+    | ResetTimerBackend
 
 
 type BackendMsg
