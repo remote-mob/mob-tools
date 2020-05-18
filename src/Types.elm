@@ -2,6 +2,7 @@ module Types exposing (..)
 
 import Browser exposing (UrlRequest)
 import Browser.Navigation exposing (Key)
+import Lamdera
 import Url exposing (Url)
 
 
@@ -13,6 +14,8 @@ type alias FrontendModel =
 
 type alias BackendModel =
     { message : String
+    , secondsRemaining : Int
+    , clientIds : List Lamdera.ClientId
     }
 
 
@@ -27,8 +30,9 @@ type ToBackend
 
 
 type BackendMsg
-    = NoOpBackendMsg
+    = Tick
 
 
 type ToFrontend
     = NoOpToFrontend
+    | SecondsRemainingToFrontend Int

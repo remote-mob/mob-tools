@@ -2,6 +2,7 @@ module Backend exposing (..)
 
 import Html
 import Lamdera exposing (ClientId, SessionId)
+import Time
 import Types exposing (..)
 
 
@@ -14,26 +15,47 @@ app =
         { init = init
         , update = update
         , updateFromFrontend = updateFromFrontend
-        , subscriptions = \m -> Sub.none
+        , subscriptions = subscriptions
         }
+
+
+subscriptions model =
+    Time.every 1000 (always Tick)
 
 
 init : ( Model, Cmd BackendMsg )
 init =
-    ( { message = "Hello!" }
+    ( { message = "Hello!"
+      , secondsRemaining = 60
+      , clientIds = []
+      }
     , Cmd.none
     )
 
 
+send msg id =
+    Lamdera.sendToFrontend id msg
+
+
 update : BackendMsg -> Model -> ( Model, Cmd BackendMsg )
 update msg model =
+    let
+        secondsRemaining =
+            model.secondsRemaining - 1
+    in
     case msg of
-        NoOpBackendMsg ->
-            ( model, Cmd.none )
+        Tick ->
+            ( { model | secondsRemaining = secondsRemaining }
+            , model.clientIds
+                |> List.map (send (SecondsRemainingToFrontend secondsRemaining))
+                |> Cmd.batch
+            )
 
 
 updateFromFrontend : SessionId -> ClientId -> ToBackend -> Model -> ( Model, Cmd BackendMsg )
 updateFromFrontend sessionId clientId msg model =
     case msg of
         NoOpToBackend ->
-            ( model, Cmd.none )
+            ( { model | clientIds = clientId :: model.clientIds }
+            , Lamdera.sendToFrontend clientId NoOpToFrontend
+            )

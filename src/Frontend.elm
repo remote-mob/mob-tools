@@ -28,9 +28,9 @@ app =
 init : Url.Url -> Nav.Key -> ( Model, Cmd FrontendMsg )
 init url key =
     ( { key = key
-      , message = "Welcome to Lamdera! You're looking at the auto-generated base implementation. Check out src/Frontend.elm to start coding!"
+      , message = ""
       }
-    , Cmd.none
+    , Lamdera.sendToBackend NoOpToBackend
     )
 
 
@@ -58,7 +58,12 @@ update msg model =
 
 updateFromBackend : ToFrontend -> Model -> ( Model, Cmd FrontendMsg )
 updateFromBackend msg model =
-    ( model, Cmd.none )
+    case msg of
+        NoOpToFrontend ->
+            ( { model | message = "got message" }, Cmd.none )
+
+        SecondsRemainingToFrontend seconds ->
+            ( { model | message = String.fromInt seconds }, Cmd.none )
 
 
 view model =
