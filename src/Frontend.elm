@@ -31,7 +31,7 @@ init url key =
     ( { key = key
       , message = ""
       }
-    , Lamdera.sendToBackend NoOpToBackend
+    , Lamdera.sendToBackend Connect
     )
 
 
@@ -74,7 +74,7 @@ updateFromBackend : ToFrontend -> Model -> ( Model, Cmd FrontendMsg )
 updateFromBackend msg model =
     case msg of
         NoOpToFrontend ->
-            ( { model | message = "got message" }, Cmd.none )
+            ( { model | message = "Connected" }, Cmd.none )
 
         SecondsRemainingToFrontend seconds ->
             ( { model | message = showTime seconds }, Cmd.none )

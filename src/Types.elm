@@ -30,7 +30,7 @@ type FrontendMsg
 
 
 type ToBackend
-    = NoOpToBackend
+    = Connect
     | ResetTimerBackend
     | StartTimerBackend
     | StopTimerBackend

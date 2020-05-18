@@ -69,9 +69,11 @@ update msg model =
 updateFromFrontend : SessionId -> ClientId -> ToBackend -> Model -> ( Model, Cmd BackendMsg )
 updateFromFrontend sessionId clientId msg model =
     case msg of
-        NoOpToBackend ->
+        Connect ->
             ( { model | clientIds = clientId :: model.clientIds }
-            , Lamdera.sendToFrontend clientId NoOpToFrontend
+            , Lamdera.sendToFrontend
+                clientId
+                (SecondsRemainingToFrontend model.secondsRemaining)
             )
 
         ResetTimerBackend ->
