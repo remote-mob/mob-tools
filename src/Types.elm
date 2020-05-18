@@ -14,6 +14,7 @@ type alias FrontendModel =
 
 type alias BackendModel =
     { secondsRemaining : Int
+    , isActive: Bool
     , clientIds : List Lamdera.ClientId
     , timerLengthInSeconds : Int
     }
@@ -24,11 +25,13 @@ type FrontendMsg
     | UrlChanged Url
     | NoOpFrontendMsg
     | ResetTimer
+    | StartTimer
 
 
 type ToBackend
     = NoOpToBackend
     | ResetTimerBackend
+    | StartTimerBackend
 
 
 type BackendMsg

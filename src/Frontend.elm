@@ -59,6 +59,9 @@ update msg model =
         ResetTimer ->
             ( model, Lamdera.sendToBackend ResetTimerBackend )
 
+        StartTimer ->
+            ( model, Lamdera.sendToBackend StartTimerBackend )
+
 
 updateFromBackend : ToFrontend -> Model -> ( Model, Cmd FrontendMsg )
 updateFromBackend msg model =
@@ -80,6 +83,9 @@ view model =
                 , Attr.style "padding-top" "40px"
                 ]
                 [ Html.text model.message ]
+            , Html.button
+                [ Event.onClick StartTimer ]
+                [ Html.text "Start" ]
             , Html.button
                 [ Event.onClick ResetTimer ]
                 [ Html.text "reset" ]
