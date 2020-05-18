@@ -92,3 +92,8 @@ updateFromFrontend sessionId clientId msg model =
             ( { model | isActive = True }
             , Cmd.none
             )
+
+        StopTimerBackend ->
+            ( { model | isActive = False }
+            , Cmd.none
+            )

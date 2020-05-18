@@ -26,12 +26,14 @@ type FrontendMsg
     | NoOpFrontendMsg
     | ResetTimer
     | StartTimer
+    | StopTimer
 
 
 type ToBackend
     = NoOpToBackend
     | ResetTimerBackend
     | StartTimerBackend
+    | StopTimerBackend
 
 
 type BackendMsg

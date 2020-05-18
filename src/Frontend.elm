@@ -37,6 +37,10 @@ init url key =
 
 update : FrontendMsg -> Model -> ( Model, Cmd FrontendMsg )
 update msg model =
+    let
+        send msgToSend =
+            ( model, Lamdera.sendToBackend msgToSend )
+    in
     case msg of
         UrlClicked urlRequest ->
             case urlRequest of
@@ -57,10 +61,13 @@ update msg model =
             ( model, Cmd.none )
 
         ResetTimer ->
-            ( model, Lamdera.sendToBackend ResetTimerBackend )
+            send ResetTimerBackend
 
         StartTimer ->
-            ( model, Lamdera.sendToBackend StartTimerBackend )
+            send StartTimerBackend
+
+        StopTimer ->
+            send StopTimerBackend
 
 
 updateFromBackend : ToFrontend -> Model -> ( Model, Cmd FrontendMsg )
@@ -87,8 +94,11 @@ view model =
                 [ Event.onClick StartTimer ]
                 [ Html.text "Start" ]
             , Html.button
+                [ Event.onClick StopTimer ]
+                [ Html.text "Stop" ]
+            , Html.button
                 [ Event.onClick ResetTimer ]
-                [ Html.text "reset" ]
+                [ Html.text "Reset" ]
             ]
         ]
     }
