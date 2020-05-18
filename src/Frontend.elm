@@ -99,10 +99,10 @@ view model =
     { title = ""
     , body =
         [ Html.div [ Attr.style "text-align" "center", Attr.style "padding-top" "40px" ]
-            [ Html.img [ Attr.src "https://lamdera.app/lamdera-logo-black.png", Attr.width 150 ] []
-            , Html.div
+            [ Html.div
                 [ Attr.style "font-family" "sans-serif"
-                , Attr.style "padding-top" "40px"
+                , Attr.style "padding" "40px"
+                , Attr.style "font-size" "xxx-large"
                 ]
                 [ Html.text model.message ]
             , Html.button
