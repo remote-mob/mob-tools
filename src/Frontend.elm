@@ -13,6 +13,8 @@ import Url
 type alias Model =
     FrontendModel
 
+type alias Msg =
+    FrontendMsg
 
 app =
     Lamdera.frontend
@@ -26,14 +28,14 @@ app =
         }
 
 
-init : Url.Url -> Nav.Key -> ( Model, Cmd FrontendMsg )
+init : Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init url key =
     ( { secondsRemaining = 0 }
     , Lamdera.sendToBackend Connect
     )
 
 
-update : FrontendMsg -> Model -> ( Model, Cmd FrontendMsg )
+update : FrontendMsg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
         send msgToSend =
@@ -54,7 +56,7 @@ update msg model =
             send StopTimerBackend
 
 
-updateFromBackend : ToFrontend -> Model -> ( Model, Cmd FrontendMsg )
+updateFromBackend : ToFrontend -> Model -> ( Model, Cmd Msg )
 updateFromBackend msg model =
     case msg of
         NoOpToFrontend ->
@@ -87,7 +89,7 @@ showTime totalSeconds =
         |> (++) sign
 
 
-view : Model -> Browser.Document FrontendMsg
+view : Model -> Browser.Document Msg
 view model =
     let
         audio =
