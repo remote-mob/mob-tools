@@ -93,22 +93,22 @@ showTime totalSeconds =
 view : Model -> Browser.Document Msg
 view model =
     let
-        audio =
-            if model.secondsRemaining < 0 then
-                [ Html.audio
+        blop = Html.audio
                     [ Attr.src "blop.mp3"
                     , Attr.autoplay True
                     ]
                     []
-                ]
+        audio =
+            if model.secondsRemaining < 0 then
+                [ blop ]
 
             else
                 []
     in
-    { title = ""
+    { title = showTime model.secondsRemaining
     , body =
         [ Html.div [ Attr.style "text-align" "center", Attr.style "padding-top" "40px" ]
-            ([ Html.div
+            ([  Html.div
                 [ Attr.style "font-family" "sans-serif"
                 , Attr.style "padding" "40px"
                 , Attr.style "font-size" "xxx-large"

@@ -83,7 +83,7 @@ updateFromFrontend sessionId clientId msg model =
     in
     case msg of
         Connect ->
-            ( { model | clientIds = clientId :: model.clientIds }
+            ( { model | clientIds = clientId :: List.filter ((==) clientId) model.clientIds }
             , Lamdera.sendToFrontend
                 clientId
                 (SecondsRemainingToFrontend secondsRemaining)
