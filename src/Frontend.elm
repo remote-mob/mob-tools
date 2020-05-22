@@ -2,9 +2,9 @@ module Frontend exposing (..)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Html
-import Html.Attributes as Attr
-import Html.Events as Event
+import Html exposing (audio, button, div, text)
+import Html.Attributes as Attr exposing (style)
+import Html.Events as Event exposing (onClick)
 import Lamdera
 import Timer
 import Types exposing (..)
@@ -71,40 +71,38 @@ updateFromBackend msg model =
 view : Model -> Browser.Document Msg
 view model =
     let
-        blop =
-            Html.audio
-                [ Attr.src "blop.mp3"
-                , Attr.autoplay True
-                ]
-                []
-
-        audio =
+        audioElement =
             if Timer.getSeconds model.timer < 0 then
-                [ blop ]
+                [ audio
+                    [ Attr.src "blop.mp3"
+                    , Attr.autoplay True
+                    ]
+                    []
+                ]
 
             else
                 []
     in
     { title = Timer.showTime model.timer
     , body =
-        [ Html.div [ Attr.style "text-align" "center", Attr.style "padding-top" "40px" ]
-            ([ Html.div
-                [ Attr.style "font-family" "sans-serif"
-                , Attr.style "padding" "40px"
-                , Attr.style "font-size" "xxx-large"
+        [ div [ style "text-align" "center", style "padding-top" "40px" ]
+            ([ div
+                [ style "font-family" "sans-serif"
+                , style "padding" "40px"
+                , style "font-size" "xxx-large"
                 ]
-                [ Html.text <| Timer.showTime model.timer ]
-             , Html.button
-                [ Event.onClick StartTimer ]
-                [ Html.text "Start" ]
-             , Html.button
-                [ Event.onClick StopTimer ]
-                [ Html.text "Stop" ]
-             , Html.button
-                [ Event.onClick ResetTimer ]
-                [ Html.text "Reset" ]
+                [ text <| Timer.showTime model.timer ]
+             , button
+                [ onClick StartTimer ]
+                [ text "Start" ]
+             , button
+                [ onClick StopTimer ]
+                [ text "Stop" ]
+             , button
+                [ onClick ResetTimer ]
+                [ text "Reset" ]
              ]
-                ++ audio
+                ++ audioElement
             )
         ]
     }
