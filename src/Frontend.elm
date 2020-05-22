@@ -80,8 +80,12 @@ view { timer } =
                 , style "font-size" "xxx-large"
                 ]
                 [ text <| Timer.showTime timer ]
-            , button [ onClick StartTimer ] [ text "Start" ]
-            , button [ onClick StopTimer ] [ text "Stop" ]
+            , case timer of
+                Timer.Stoped _ ->
+                    button [ onClick StartTimer ] [ text "Start" ]
+
+                Timer.Started _ ->
+                    button [ onClick StopTimer ] [ text "Stop" ]
             , button [ onClick ResetTimer ] [ text "Reset" ]
             , viewIf (timer |> hasExpired)
                 (audio

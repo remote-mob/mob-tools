@@ -1,6 +1,7 @@
 module Backend exposing (..)
 
 import Lamdera exposing (ClientId, SessionId)
+import Set
 import Time
 import Timer exposing (..)
 import Types exposing (..)
@@ -75,31 +76,21 @@ update msg model =
 
 updateFromFrontend : SessionId -> ClientId -> ToBackend -> Model -> ( Model, Cmd Msg )
 updateFromFrontend _ clientId msg model =
-    case msg of
-        Connect ->
-            ( { model | clientIds = clientId :: List.filter ((==) clientId) model.clientIds }
-            , Lamdera.sendToFrontend
-                clientId
-                (TimerToFrontend model.timer)
-            )
+    let
+        nextModel =
+            case msg of
+                Connect ->
+                    { model
+                        | clientIds = clientId :: List.filter ((==) clientId) model.clientIds
+                    }
 
-        ResetTimerBackend ->
-            let
-                nextModel =
+                ResetTimerBackend ->
                     { model | timer = newTimer }
-            in
-            ( nextModel
-            , sendToMany
-                (TimerToFrontend newTimer)
-                nextModel.clientIds
-            )
 
-        StartTimerBackend ->
-            ( { model | timer = start model.timer }
-            , Cmd.none
-            )
+                StartTimerBackend ->
+                    { model | timer = start model.timer }
 
-        StopTimerBackend ->
-            ( { model | timer = stop model.timer }
-            , Cmd.none
-            )
+                StopTimerBackend ->
+                    { model | timer = stop model.timer }
+    in
+    ( nextModel, sendToMany (TimerToFrontend nextModel.timer) nextModel.clientIds )
