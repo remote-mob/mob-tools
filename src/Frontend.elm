@@ -72,7 +72,7 @@ view : Model -> Browser.Document Msg
 view model =
     let
         audioElement =
-            if Timer.getSeconds model.timer < 0 then
+            if model.timer |> Timer.hasExpired then
                 [ audio
                     [ Attr.src "blop.mp3"
                     , Attr.autoplay True

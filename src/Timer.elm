@@ -27,6 +27,11 @@ start =
     Started << getSeconds
 
 
+hasExpired : Timer -> Bool
+hasExpired =
+    (>) 0 << getSeconds
+
+
 newTimer =
     Stoped (60 * 6)
 
