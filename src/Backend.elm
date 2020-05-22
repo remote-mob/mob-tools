@@ -59,7 +59,7 @@ update msg model =
             ( model, Cmd.none )
 
         timer =
-            Timer.addSeconds 1 model.timer
+            Timer.addSeconds -1 model.timer
 
         nextModel =
             { model | timer = timer }
@@ -82,7 +82,7 @@ updateFromFrontend _ clientId msg model =
     let
         nextModel =
             case msg of
-                Connect ->
+                EnterRoom path ->
                     { model
                         | clientIds = Set.insert clientId model.clientIds
                     }

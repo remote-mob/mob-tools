@@ -11,6 +11,10 @@ type alias FrontendModel =
 
 
 type alias BackendModel =
+    Room
+
+
+type alias Room =
     { timer : Timer
     , clientIds : Set Lamdera.ClientId
     }
@@ -24,7 +28,7 @@ type FrontendMsg
 
 
 type ToBackend
-    = Connect
+    = EnterRoom String
     | ResetTimerBackend
     | StartTimerBackend
     | StopTimerBackend

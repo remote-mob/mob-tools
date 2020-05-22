@@ -33,9 +33,9 @@ app =
 
 
 init : Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init _ _ =
+init url _ =
     ( { timer = Timer.newTimer }
-    , Lamdera.sendToBackend Connect
+    , Lamdera.sendToBackend <| EnterRoom url.path
     )
 
 
