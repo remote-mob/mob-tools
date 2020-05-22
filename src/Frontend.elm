@@ -83,8 +83,7 @@ view { timer } =
             , button [ onClick StartTimer ] [ text "Start" ]
             , button [ onClick StopTimer ] [ text "Stop" ]
             , button [ onClick ResetTimer ] [ text "Reset" ]
-            , viewIf
-                (timer |> hasExpired)
+            , viewIf (timer |> hasExpired)
                 (audio
                     [ Attr.src "blop.mp3"
                     , Attr.autoplay True
