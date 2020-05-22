@@ -29,3 +29,29 @@ start =
 
 newTimer =
     Stoped (60 * 6)
+
+
+showTime : Timer -> String
+showTime timer =
+    let
+        totalSeconds =
+            getSeconds timer
+
+        seconds =
+            remainderBy 60 totalSeconds
+
+        minutes =
+            totalSeconds // 60
+
+        sign =
+            if totalSeconds > 0 then
+                ""
+
+            else
+                "-"
+    in
+    [ abs minutes, abs seconds ]
+        |> List.map String.fromInt
+        |> List.map (String.padLeft 2 '0')
+        |> String.join ":"
+        |> (++) sign

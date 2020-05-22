@@ -68,32 +68,6 @@ updateFromBackend msg model =
             ( { model | timer = timer }, Cmd.none )
 
 
-showTime : Timer.Timer -> String
-showTime timer =
-    let
-        totalSeconds =
-            Timer.getSeconds timer
-
-        seconds =
-            remainderBy 60 totalSeconds
-
-        minutes =
-            totalSeconds // 60
-
-        sign =
-            if totalSeconds > 0 then
-                ""
-
-            else
-                "-"
-    in
-    [ abs minutes, abs seconds ]
-        |> List.map String.fromInt
-        |> List.map (String.padLeft 2 '0')
-        |> String.join ":"
-        |> (++) sign
-
-
 view : Model -> Browser.Document Msg
 view model =
     let
@@ -111,7 +85,7 @@ view model =
             else
                 []
     in
-    { title = showTime model.timer
+    { title = Timer.showTime model.timer
     , body =
         [ Html.div [ Attr.style "text-align" "center", Attr.style "padding-top" "40px" ]
             ([ Html.div
@@ -119,7 +93,7 @@ view model =
                 , Attr.style "padding" "40px"
                 , Attr.style "font-size" "xxx-large"
                 ]
-                [ Html.text <| showTime model.timer ]
+                [ Html.text <| Timer.showTime model.timer ]
              , Html.button
                 [ Event.onClick StartTimer ]
                 [ Html.text "Start" ]
