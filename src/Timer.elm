@@ -7,7 +7,7 @@ type alias Seconds =
 
 type Timer
     = Started Seconds
-    | Stoped Seconds
+    | Stopped Seconds
 
 
 getSeconds timer =
@@ -15,12 +15,12 @@ getSeconds timer =
         Started seconds ->
             seconds
 
-        Stoped seconds ->
+        Stopped seconds ->
             seconds
 
 
 stop =
-    Stoped << getSeconds
+    Stopped << getSeconds
 
 
 start =
@@ -33,7 +33,7 @@ hasExpired =
 
 
 newTimer =
-    Stoped (60 * 6)
+    Stopped (60 * 6)
 
 
 showTime : Timer -> String

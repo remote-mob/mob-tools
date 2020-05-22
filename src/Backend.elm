@@ -56,7 +56,7 @@ update msg model =
     case msg of
         Tick ->
             case model.timer of
-                Stoped _ ->
+                Stopped _ ->
                     doNothing
 
                 Started seconds ->

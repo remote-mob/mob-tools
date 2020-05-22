@@ -81,7 +81,7 @@ view { timer } =
                 ]
                 [ text <| Timer.showTime timer ]
             , case timer of
-                Timer.Stoped _ ->
+                Timer.Stopped _ ->
                     button [ onClick StartTimer ] [ text "Start" ]
 
                 Timer.Started _ ->
