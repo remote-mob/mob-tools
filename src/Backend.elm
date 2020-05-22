@@ -31,7 +31,7 @@ subscriptions _ =
 init : ( Model, Cmd Msg )
 init =
     ( { timer = newTimer
-      , clientIds = []
+      , clientIds = Set.empty
       }
     , Cmd.none
     )
@@ -43,6 +43,7 @@ send msg id =
 
 sendToMany msg ids =
     ids
+        |> Set.toList
         |> List.map (send msg)
         |> Cmd.batch
 
@@ -81,7 +82,9 @@ updateFromFrontend _ clientId msg model =
             case msg of
                 Connect ->
                     { model
-                        | clientIds = clientId :: List.filter ((==) clientId) model.clientIds
+                        | clientIds =
+                            model.clientIds
+                                |> Set.insert clientId
                     }
 
                 ResetTimerBackend ->

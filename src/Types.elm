@@ -1,6 +1,7 @@
 module Types exposing (..)
 
 import Lamdera
+import Set exposing (Set)
 import Timer exposing (..)
 
 
@@ -11,7 +12,7 @@ type alias FrontendModel =
 
 type alias BackendModel =
     { timer : Timer
-    , clientIds : List Lamdera.ClientId
+    , clientIds : Set Lamdera.ClientId
     }
 
 
