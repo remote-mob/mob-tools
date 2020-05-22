@@ -41,6 +41,10 @@ send msg id =
     Lamdera.sendToFrontend id msg
 
 
+broadCastTimer model =
+    sendToMany (TimerToFrontend model.timer) model.clientIds
+
+
 sendToMany msg ids =
     ids
         |> Set.toList
@@ -53,6 +57,15 @@ update msg model =
     let
         doNothing =
             ( model, Cmd.none )
+
+        timer =
+            Timer.addSeconds 1 model.timer
+
+        nextModel =
+            { model | timer = timer }
+
+        incrementTimer =
+            ( nextModel, broadCastTimer nextModel )
     in
     case msg of
         Tick ->
@@ -60,19 +73,8 @@ update msg model =
                 Stopped _ ->
                     doNothing
 
-                Started seconds ->
-                    let
-                        secondsRemaining =
-                            seconds - 1
-
-                        timer =
-                            Started secondsRemaining
-                    in
-                    ( { model | timer = timer }
-                    , sendToMany
-                        (TimerToFrontend timer)
-                        model.clientIds
-                    )
+                Started _ ->
+                    incrementTimer
 
 
 updateFromFrontend : SessionId -> ClientId -> ToBackend -> Model -> ( Model, Cmd Msg )
@@ -94,4 +96,4 @@ updateFromFrontend _ clientId msg model =
                 StopTimerBackend ->
                     { model | timer = stop model.timer }
     in
-    ( nextModel, sendToMany (TimerToFrontend nextModel.timer) nextModel.clientIds )
+    ( nextModel, broadCastTimer nextModel )

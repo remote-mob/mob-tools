@@ -36,6 +36,15 @@ newTimer =
     Stopped (60 * 6)
 
 
+addSeconds secondsToAdd timer =
+    case timer of
+        Started seconds ->
+            Started (seconds + secondsToAdd)
+
+        Stopped seconds ->
+            Stopped (seconds + secondsToAdd)
+
+
 showTime : Timer -> String
 showTime timer =
     let
