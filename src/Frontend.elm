@@ -5,8 +5,9 @@ import Browser.Navigation as Nav
 import Html exposing (audio, button, div, text)
 import Html.Attributes as Attr exposing (style)
 import Html.Events as Event exposing (onClick)
+import Html.Extra exposing (viewIf)
 import Lamdera
-import Timer
+import Timer exposing (hasExpired)
 import Types exposing (..)
 import Url
 
@@ -69,40 +70,27 @@ updateFromBackend msg model =
 
 
 view : Model -> Browser.Document Msg
-view model =
-    let
-        audioElement =
-            if model.timer |> Timer.hasExpired then
-                [ audio
-                    [ Attr.src "blop.mp3"
-                    , Attr.autoplay True
-                    ]
-                    []
-                ]
-
-            else
-                []
-    in
-    { title = Timer.showTime model.timer
+view { timer } =
+    { title = Timer.showTime timer
     , body =
         [ div [ style "text-align" "center", style "padding-top" "40px" ]
-            ([ div
+            [ div
                 [ style "font-family" "sans-serif"
                 , style "padding" "40px"
                 , style "font-size" "xxx-large"
                 ]
-                [ text <| Timer.showTime model.timer ]
-             , button
-                [ onClick StartTimer ]
-                [ text "Start" ]
-             , button
-                [ onClick StopTimer ]
-                [ text "Stop" ]
-             , button
-                [ onClick ResetTimer ]
-                [ text "Reset" ]
-             ]
-                ++ audioElement
-            )
+                [ text <| Timer.showTime timer ]
+            , button [ onClick StartTimer ] [ text "Start" ]
+            , button [ onClick StopTimer ] [ text "Stop" ]
+            , button [ onClick ResetTimer ] [ text "Reset" ]
+            , viewIf
+                (timer |> hasExpired)
+                (audio
+                    [ Attr.src "blop.mp3"
+                    , Attr.autoplay True
+                    ]
+                    []
+                )
+            ]
         ]
     }
