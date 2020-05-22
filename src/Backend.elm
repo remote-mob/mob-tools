@@ -1,10 +1,9 @@
 module Backend exposing (..)
 
-import Html
 import Lamdera exposing (ClientId, SessionId)
 import Time
-import Types exposing (..)
 import Timer exposing (..)
+import Types exposing (..)
 
 
 type alias Model =
@@ -24,12 +23,8 @@ app =
         }
 
 
-subscriptions model =
+subscriptions _ =
     Time.every 1000 (always Tick)
-
-
-newTimer =
-    Stoped (60 * 6)
 
 
 init : ( Model, Cmd Msg )
@@ -67,26 +62,25 @@ update msg model =
                     let
                         secondsRemaining =
                             seconds - 1
+
+                        timer =
+                            Started secondsRemaining
                     in
-                    ( { model | timer = Started secondsRemaining }
+                    ( { model | timer = timer }
                     , sendToMany
-                        (SecondsRemainingToFrontend secondsRemaining)
+                        (TimerToFrontend timer)
                         model.clientIds
                     )
 
 
 updateFromFrontend : SessionId -> ClientId -> ToBackend -> Model -> ( Model, Cmd Msg )
-updateFromFrontend sessionId clientId msg model =
-    let
-        secondsRemaining =
-            getSeconds model.timer
-    in
+updateFromFrontend _ clientId msg model =
     case msg of
         Connect ->
             ( { model | clientIds = clientId :: List.filter ((==) clientId) model.clientIds }
             , Lamdera.sendToFrontend
                 clientId
-                (SecondsRemainingToFrontend secondsRemaining)
+                (TimerToFrontend model.timer)
             )
 
         ResetTimerBackend ->
@@ -96,7 +90,7 @@ updateFromFrontend sessionId clientId msg model =
             in
             ( nextModel
             , sendToMany
-                (SecondsRemainingToFrontend <| getSeconds nextModel.timer)
+                (TimerToFrontend newTimer)
                 nextModel.clientIds
             )
 

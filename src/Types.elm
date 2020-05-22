@@ -1,14 +1,11 @@
 module Types exposing (..)
 
-import Browser exposing (UrlRequest)
-import Browser.Navigation exposing (Key)
 import Lamdera
-import Url exposing (Url)
 import Timer exposing (..)
 
 
 type alias FrontendModel =
-    { secondsRemaining : Int
+    { timer : Timer
     }
 
 
@@ -38,4 +35,4 @@ type BackendMsg
 
 type ToFrontend
     = NoOpToFrontend
-    | SecondsRemainingToFrontend Int
+    | TimerToFrontend Timer

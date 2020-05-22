@@ -6,6 +6,7 @@ import Html
 import Html.Attributes as Attr
 import Html.Events as Event
 import Lamdera
+import Timer
 import Types exposing (..)
 import Url
 
@@ -31,8 +32,8 @@ app =
 
 
 init : Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init url key =
-    ( { secondsRemaining = 0 }
+init _ _ =
+    ( { timer = Timer.newTimer }
     , Lamdera.sendToBackend Connect
     )
 
@@ -63,13 +64,16 @@ updateFromBackend msg model =
         NoOpToFrontend ->
             ( model, Cmd.none )
 
-        SecondsRemainingToFrontend seconds ->
-            ( { model | secondsRemaining = seconds }, Cmd.none )
+        TimerToFrontend timer ->
+            ( { model | timer = timer }, Cmd.none )
 
 
-showTime : Int -> String
-showTime totalSeconds =
+showTime : Timer.Timer -> String
+showTime timer =
     let
+        totalSeconds =
+            Timer.getSeconds timer
+
         seconds =
             remainderBy 60 totalSeconds
 
@@ -93,27 +97,29 @@ showTime totalSeconds =
 view : Model -> Browser.Document Msg
 view model =
     let
-        blop = Html.audio
-                    [ Attr.src "blop.mp3"
-                    , Attr.autoplay True
-                    ]
-                    []
+        blop =
+            Html.audio
+                [ Attr.src "blop.mp3"
+                , Attr.autoplay True
+                ]
+                []
+
         audio =
-            if model.secondsRemaining < 0 then
+            if Timer.getSeconds model.timer < 0 then
                 [ blop ]
 
             else
                 []
     in
-    { title = showTime model.secondsRemaining
+    { title = showTime model.timer
     , body =
         [ Html.div [ Attr.style "text-align" "center", Attr.style "padding-top" "40px" ]
-            ([  Html.div
+            ([ Html.div
                 [ Attr.style "font-family" "sans-serif"
                 , Attr.style "padding" "40px"
                 , Attr.style "font-size" "xxx-large"
                 ]
-                [ Html.text <| showTime model.secondsRemaining ]
+                [ Html.text <| showTime model.timer ]
              , Html.button
                 [ Event.onClick StartTimer ]
                 [ Html.text "Start" ]

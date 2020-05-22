@@ -1,5 +1,6 @@
 module Timer exposing (..)
 
+
 type alias Seconds =
     Int
 
@@ -24,3 +25,7 @@ stop =
 
 start =
     Started << getSeconds
+
+
+newTimer =
+    Stoped (60 * 6)
