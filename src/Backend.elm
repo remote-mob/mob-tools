@@ -82,9 +82,7 @@ updateFromFrontend _ clientId msg model =
             case msg of
                 Connect ->
                     { model
-                        | clientIds =
-                            model.clientIds
-                                |> Set.insert clientId
+                        | clientIds = Set.insert clientId model.clientIds
                     }
 
                 ResetTimerBackend ->
