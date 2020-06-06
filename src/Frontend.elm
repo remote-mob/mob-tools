@@ -5,7 +5,7 @@ import Browser.Navigation as Nav
 import Html exposing (audio, button, div, input, label, text)
 import Html.Attributes as Attr exposing (style)
 import Html.Attributes.Extra as ExAttr
-import Html.Events exposing (on, onClick)
+import Html.Events exposing (on, onClick, onInput)
 import Html.Events.Extra exposing (onChange)
 import Html.Extra exposing (viewIf)
 import Json.Decode as Decode
@@ -66,12 +66,7 @@ update msg model =
             send StopTimerBackend
 
         ChangeVolume newVolume ->
-            ( { model
-                | volume = newVolume
-                , playSound = True
-              }
-            , Cmd.none
-            )
+            ( { model | volume = newVolume }, Cmd.none )
 
         TestSound ->
             ( { model | playSound = True }, Cmd.none )
@@ -125,7 +120,7 @@ view { timer, volume, playSound } =
                     , Attr.min "0"
                     , Attr.max "100"
                     , Attr.value <| String.fromInt volume
-                    , onChange
+                    , onInput
                         (\value ->
                             case String.toInt value of
                                 Just newVolume ->
@@ -134,6 +129,7 @@ view { timer, volume, playSound } =
                                 Nothing ->
                                     ChangeVolume volume
                         )
+                    , onChange (always TestSound)
                     ]
                     []
                 , text <| String.fromInt volume
