@@ -127,7 +127,7 @@ view { timer, volume, playSound } =
                 ]
             , viewIf ((timer |> hasExpired) || playSound)
                 (audio
-                    [ Attr.src "blop.mp3"
+                    [ Attr.src "loud_blop.mp3"
                     , Attr.autoplay True
                     , ExAttr.volume (toFloat volume / 100.0)
                     , on "ended" (Decode.succeed SoundEnded)
