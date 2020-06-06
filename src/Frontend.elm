@@ -2,7 +2,7 @@ module Frontend exposing (..)
 
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
-import Html exposing (audio, button, div, text)
+import Html exposing (audio, button, div, input, label, text)
 import Html.Attributes as Attr exposing (style)
 import Html.Attributes.Extra as ExAttr
 import Html.Events as Event exposing (onClick)
@@ -90,6 +90,17 @@ view { timer, volume } =
                 Timer.Started _ ->
                     button [ onClick StopTimer ] [ text "Stop" ]
             , button [ onClick ResetTimer ] [ text "Reset" ]
+            , div []
+                [ label [ Attr.for "volume" ] [ text "Volume" ]
+                , input
+                    [ Attr.type_ "range"
+                    , Attr.name "volume"
+                    , Attr.min "0"
+                    , Attr.max "1"
+                    , Attr.value <| String.fromFloat volume
+                    ]
+                    []
+                ]
             , viewIf (timer |> hasExpired)
                 (audio
                     [ Attr.src "blop.mp3"
