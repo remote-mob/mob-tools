@@ -66,7 +66,12 @@ update msg model =
             send StopTimerBackend
 
         ChangeVolume newVolume ->
-            ( { model | volume = newVolume }, Cmd.none )
+            ( { model
+                | volume = newVolume
+                , playSound = True
+              }
+            , Cmd.none
+            )
 
         TestSound ->
             ( { model | playSound = True }, Cmd.none )
