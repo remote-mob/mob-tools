@@ -6,11 +6,13 @@ import Html exposing (audio, button, div, input, label, text)
 import Html.Attributes as Attr exposing (style)
 import Html.Attributes.Extra as ExAttr
 import Html.Events as Event exposing (onClick)
+import Html.Events.Extra exposing (onChange)
 import Html.Extra exposing (viewIf)
 import Lamdera
+import String exposing (fromFloat)
 import Timer exposing (hasExpired)
 import Types exposing (..)
-import Url
+import Url exposing (fromString)
 
 
 type alias Model =
@@ -61,6 +63,9 @@ update msg model =
         StopTimer ->
             send StopTimerBackend
 
+        ChangeVolume newVolume ->
+            ( { model | volume = newVolume }, Cmd.none )
+
 
 updateFromBackend : ToFrontend -> Model -> ( Model, Cmd Msg )
 updateFromBackend msg model =
@@ -98,6 +103,15 @@ view { timer, volume } =
                     , Attr.min "0"
                     , Attr.max "1"
                     , Attr.value <| String.fromFloat volume
+                    , onChange
+                        (\value ->
+                            case String.toFloat value of
+                                Just newVolume ->
+                                    ChangeVolume newVolume
+
+                                Nothing ->
+                                    ChangeVolume volume
+                        )
                     ]
                     []
                 ]

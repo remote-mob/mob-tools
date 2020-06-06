@@ -26,6 +26,7 @@ type FrontendMsg
     | ResetTimer
     | StartTimer
     | StopTimer
+    | ChangeVolume Float
 
 
 type ToBackend
