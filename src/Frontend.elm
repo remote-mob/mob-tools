@@ -9,10 +9,10 @@ import Html.Events as Event exposing (onClick)
 import Html.Events.Extra exposing (onChange)
 import Html.Extra exposing (viewIf)
 import Lamdera
-import String exposing (fromFloat)
+import String
 import Timer exposing (hasExpired)
 import Types exposing (..)
-import Url exposing (fromString)
+import Url
 
 
 type alias Model =
