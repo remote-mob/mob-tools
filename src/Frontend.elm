@@ -38,7 +38,7 @@ app =
 init : Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init url _ =
     ( { timer = Timer.newTimer
-      , volume = 0.5
+      , volume = 50
       }
     , Lamdera.sendToBackend <| EnterRoom url.path
     )
@@ -101,11 +101,11 @@ view { timer, volume } =
                     [ Attr.type_ "range"
                     , Attr.name "volume"
                     , Attr.min "0"
-                    , Attr.max "1"
-                    , Attr.value <| String.fromFloat volume
+                    , Attr.max "100"
+                    , Attr.value <| String.fromInt volume
                     , onChange
                         (\value ->
-                            case String.toFloat value of
+                            case String.toInt value of
                                 Just newVolume ->
                                     ChangeVolume newVolume
 
@@ -114,12 +114,13 @@ view { timer, volume } =
                         )
                     ]
                     []
+                , text <| String.fromInt volume
                 ]
             , viewIf (timer |> hasExpired)
                 (audio
                     [ Attr.src "blop.mp3"
                     , Attr.autoplay True
-                    , ExAttr.volume volume
+                    , ExAttr.volume (toFloat volume / 100.0)
                     ]
                     []
                 )

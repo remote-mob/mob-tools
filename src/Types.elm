@@ -5,9 +5,13 @@ import Set exposing (Set)
 import Timer exposing (..)
 
 
+type alias Volume =
+    Int
+
+
 type alias FrontendModel =
     { timer : Timer
-    , volume : Float
+    , volume : Volume
     }
 
 
@@ -26,7 +30,7 @@ type FrontendMsg
     | ResetTimer
     | StartTimer
     | StopTimer
-    | ChangeVolume Float
+    | ChangeVolume Volume
 
 
 type ToBackend
