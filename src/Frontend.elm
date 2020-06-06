@@ -82,7 +82,15 @@ updateFromBackend msg model =
             ( model, Cmd.none )
 
         TimerToFrontend timer ->
-            ( { model | timer = timer }, Cmd.none )
+            ( { model
+                | timer = timer
+                , playSound =
+                    (timer |> hasExpired)
+                        && (model.timer |> hasExpired |> not)
+                        || model.playSound
+              }
+            , Cmd.none
+            )
 
 
 view : Model -> Browser.Document Msg
@@ -125,7 +133,7 @@ view { timer, volume, playSound } =
                     []
                 , text <| String.fromInt volume
                 ]
-            , viewIf ((timer |> hasExpired) || playSound)
+            , viewIf playSound
                 (audio
                     [ Attr.src "loud_blop.mp3"
                     , Attr.autoplay True
