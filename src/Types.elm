@@ -12,6 +12,7 @@ type alias Volume =
 type alias FrontendModel =
     { timer : Timer
     , volume : Volume
+    , testSound : Bool
     }
 
 
@@ -31,6 +32,8 @@ type FrontendMsg
     | StartTimer
     | StopTimer
     | ChangeVolume Volume
+    | TestSound
+    | SoundEnded
 
 
 type ToBackend
