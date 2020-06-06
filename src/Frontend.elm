@@ -4,6 +4,7 @@ import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
 import Html exposing (audio, button, div, text)
 import Html.Attributes as Attr exposing (style)
+import Html.Attributes.Extra as ExAttr
 import Html.Events as Event exposing (onClick)
 import Html.Extra exposing (viewIf)
 import Lamdera
@@ -34,7 +35,9 @@ app =
 
 init : Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init url _ =
-    ( { timer = Timer.newTimer }
+    ( { timer = Timer.newTimer
+      , volume = 0.5
+      }
     , Lamdera.sendToBackend <| EnterRoom url.path
     )
 
@@ -70,7 +73,7 @@ updateFromBackend msg model =
 
 
 view : Model -> Browser.Document Msg
-view { timer } =
+view { timer, volume } =
     { title = Timer.showTime timer
     , body =
         [ div [ style "text-align" "center", style "padding-top" "40px" ]
@@ -91,6 +94,7 @@ view { timer } =
                 (audio
                     [ Attr.src "blop.mp3"
                     , Attr.autoplay True
+                    , ExAttr.volume volume
                     ]
                     []
                 )

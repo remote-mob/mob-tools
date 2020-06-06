@@ -7,6 +7,7 @@ import Timer exposing (..)
 
 type alias FrontendModel =
     { timer : Timer
+    , volume : Float
     }
 
 
