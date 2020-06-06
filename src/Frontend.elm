@@ -5,7 +5,7 @@ import Browser.Navigation as Nav
 import Html exposing (audio, button, div, input, label, text)
 import Html.Attributes as Attr exposing (style)
 import Html.Attributes.Extra as ExAttr
-import Html.Events as Event exposing (on, onClick)
+import Html.Events exposing (on, onClick)
 import Html.Events.Extra exposing (onChange)
 import Html.Extra exposing (viewIf)
 import Json.Decode as Decode
@@ -40,7 +40,7 @@ init : Url.Url -> Nav.Key -> ( Model, Cmd Msg )
 init url _ =
     ( { timer = Timer.newTimer
       , volume = 50
-      , testSound = False
+      , playSound = False
       }
     , Lamdera.sendToBackend <| EnterRoom url.path
     )
@@ -69,10 +69,10 @@ update msg model =
             ( { model | volume = newVolume }, Cmd.none )
 
         TestSound ->
-            ( { model | testSound = True }, Cmd.none )
+            ( { model | playSound = True }, Cmd.none )
 
         SoundEnded ->
-            ( { model | testSound = False }, Cmd.none )
+            ( { model | playSound = False }, Cmd.none )
 
 
 updateFromBackend : ToFrontend -> Model -> ( Model, Cmd Msg )
@@ -86,7 +86,7 @@ updateFromBackend msg model =
 
 
 view : Model -> Browser.Document Msg
-view { timer, volume, testSound } =
+view { timer, volume, playSound } =
     { title = Timer.showTime timer
     , body =
         [ div [ style "text-align" "center", style "padding-top" "40px" ]
@@ -125,7 +125,7 @@ view { timer, volume, testSound } =
                     []
                 , text <| String.fromInt volume
                 ]
-            , viewIf ((timer |> hasExpired) || testSound)
+            , viewIf ((timer |> hasExpired) || playSound)
                 (audio
                     [ Attr.src "blop.mp3"
                     , Attr.autoplay True

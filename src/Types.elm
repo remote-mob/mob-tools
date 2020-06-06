@@ -12,7 +12,7 @@ type alias Volume =
 type alias FrontendModel =
     { timer : Timer
     , volume : Volume
-    , testSound : Bool
+    , playSound : Bool
     }
 
 
