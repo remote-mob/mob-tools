@@ -20,6 +20,7 @@ def all_good():
 
 
 def branch_ok():
+    os_api.git("status")
     return False
 
 
