@@ -19,6 +19,7 @@ def test_happy_path():
     result = "".join(showlines)
     verify(result + "\n")
 
+
 def test_moby_branch():
     import os_api
 
