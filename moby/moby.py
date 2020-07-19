@@ -3,7 +3,7 @@ import time
 import os_api
 
 
-def run():
+def run_once():
     all_good()
     five_first_minutes()
     last_minute()
@@ -56,4 +56,4 @@ def sync():
 
 if __name__ == "__main__":
 
-    run()
+    run_once()
