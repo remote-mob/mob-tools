@@ -1,2 +1,0 @@
-Running moby on repo "moby", good.
-Branch is not "moby-branch", halt.
