@@ -13,6 +13,7 @@ def test_happy_path():
 
     os_api.wait = lambda _: True
     os_api.show = fake_show
+    os_api.git = lambda *args: True
 
     moby.run()
     result = "".join(showlines)
