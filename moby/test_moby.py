@@ -54,6 +54,6 @@ nothing to commit, working tree clean
     os_api.show = fake_show
     os_api.git = lambda *args: git_status_output
 
-    moby.run()
+    moby.run_once()
     result = "".join(showlines)
     verify(result + "\n")
