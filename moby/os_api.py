@@ -11,4 +11,7 @@ def show(msg):
 
 
 def git(*args):
-    subprocess.check_output(["git"] + list(args))
+    try:
+        subprocess.check_output(["git"] + list(args))
+    except subprocess.CalledProcessError:
+        pass
