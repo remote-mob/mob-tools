@@ -21,6 +21,7 @@ def all_good():
 
 def branch_ok():
     output = os_api.git("status")
+    if output.splitlines()[0] != 'Branch is not "mob'
     os_api.show('Branch is not "moby-branch", halt.\n')
     return False
 
