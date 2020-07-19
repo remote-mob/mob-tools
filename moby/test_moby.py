@@ -46,11 +46,12 @@ def test_moby_branch():
     def fake_show(showmsg):
         showlines.append(showmsg)
 
-    os_api.wait = lambda _: True
-    os_api.show = fake_show
-    os_api.git = lambda *args: """On branch master
+    git_status_output = """On branch master
 nothing to commit, working tree clean
 """
+    os_api.wait = lambda _: True
+    os_api.show = fake_show
+    os_api.git = lambda *args: git_status_output
 
     moby.run()
     result = "".join(showlines)
