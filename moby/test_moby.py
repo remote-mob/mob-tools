@@ -48,7 +48,9 @@ def test_moby_branch():
 
     os_api.wait = lambda _: True
     os_api.show = fake_show
-    os_api.git = lambda *args: True
+    os_api.git = lambda *args: """On branch master
+nothing to commit, working tree clean
+"""
 
     moby.run()
     result = "".join(showlines)
