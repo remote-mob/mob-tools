@@ -12,6 +12,7 @@ def show(msg):
 
 def git(*args):
     try:
-        subprocess.run(["git"] + list(args), capture_output=True)
+        result = subprocess.run(["git"] + list(args), capture_output=True)
+        return result.stdout.decode("utf8")
     except subprocess.CalledProcessError:
         pass
