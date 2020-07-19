@@ -20,7 +20,7 @@ def test_happy_path():
     verify(result + "\n")
 
 
-def test_moby_branch():
+def _test_moby_branch():
     import os_api
 
     showlines = []
