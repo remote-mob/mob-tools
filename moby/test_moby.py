@@ -38,7 +38,7 @@ def test_happy_path_run_twice():
     verify(result + "\n")
 
 
-def _test_moby_branch():
+def test_moby_branch():
     import os_api
 
     showlines = []
