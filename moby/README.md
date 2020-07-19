@@ -16,19 +16,21 @@ Lösningsförslag
 Bygg ett Pythonscript `moby.py` som kontinuerligt uppdaterar lokalt repo och pushar ändringar, samt skriver ut när det är dags att switcha. Exempel på output:
 
 ```
-Running moby.
+Running moby on repo "moby", good.
+Branch is "moby-branch", good.
+Branch is pristine, good.
 6 minutes left until switch.
-Updating repo...
-Repo updated.
-Waiting 5 seconds.
-Updating repo...
-Repo updated.
-...
+......
 5 minutes left until switch.
-Updating repo...
-Repo updated.
-Waiting 5 seconds.
-...
+......
+4 minutes left until switch.
+......
+3 minutes left until switch.
+......
+2 minutes left until switch.
+......
+1 minute left until switch.
+.....
 10 seconds left until switch.
 5 seconds left until switch.
 4 seconds left until switch.
@@ -39,12 +41,11 @@ Waiting 5 seconds.
  ****************************
  *** SWITCH DRIVER PLEASE ***
  ****************************
-
 6 minutes left until switch.
-Updating repo...
-Repo updated.
-Waiting 5 seconds.
+......
+5 minutes left until switch.
 ...
+O.S.V
 ```
 
 
