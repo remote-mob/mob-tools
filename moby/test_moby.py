@@ -15,7 +15,7 @@ def test_happy_path():
     os_api.show = fake_show
     os_api.git = lambda *args: True
 
-    moby.run()
+    moby.run(times=1)
     result = "".join(showlines)
     verify(result + "\n")
 
