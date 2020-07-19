@@ -17,6 +17,7 @@ def all_good():
         return False
     os_api.show('Branch is "moby-branch", good.\n')
     os_api.show("Branch is pristine, good.\n")
+    return True
 
 
 def branch_ok():
