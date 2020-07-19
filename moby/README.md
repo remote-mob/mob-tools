@@ -1,19 +1,27 @@
 Problem
 =======
 
-Allmänt: handovers tar mer än 1 minut.
+Generally: handovers take around 1 minute, that a considerable overhead with 6 minute per driver.
 
-* git commit meddelanden skrivs slarvigt ibland, bra ibland (och tar mycket tid)
+* git pull, git push takes time for each driver / switch
 
-* för att mäta tid har vi switchat mellan mobiler, online timers (inkl vår egen) eller glömt bort. Oavsett tar det energi och tid att välja verktyg varje session, och att komma ihåg att switcha.
+* git commit messages vary in quality, and take time and effort to write
 
-* ibland glömmer man att göra git pull (och det är alltid något som tar tid för ny driver)
+* the method to measure time has varied a lot; sometimes mobile phones, sometimes online timers (including our own lamdera based) or even been forgotten altogether. In any case, this steals energy and time every session. So let's add another method :D
 
 
-Lösningsförslag
----------------
+Solution proposition/hypothesis
+-------------------------------
 
-Bygg ett Pythonscript `moby.py` som kontinuerligt uppdaterar lokalt repo och pushar ändringar, samt skriver ut när det är dags att switcha. Exempel på output:
+It is enough to have a Python script that continuously synchronizes the local repo (automates the git pull, add, commit and push commands) and writes timer messages on terminal when it is time to switch driver.
+
+Each mob member needs to start the script at the beginning of a session, but that it all.
+
+In case a driver session takes more than 6 minutes, it is a matter of stopping the script locally for the mob members, and re-start the script.
+
+Simplicity, grokkability.
+
+Sample output from `moby.py`:
 
 ```
 Running moby on repo "moby", good.
