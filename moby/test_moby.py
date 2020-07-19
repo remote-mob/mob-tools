@@ -13,14 +13,14 @@ def test_happy_path():
 
     os_api.wait = lambda _: True
     os_api.show = fake_show
-    os_api.git = lambda *args: True
+    os_api.git = lambda *args: "On branch moby-branch"
 
     moby.run_once()
     result = "".join(showlines)
     verify(result + "\n")
 
 
-def _test_happy_path_run_twice():
+def test_happy_path_run_twice():
     import os_api
 
     showlines = []
@@ -30,7 +30,7 @@ def _test_happy_path_run_twice():
 
     os_api.wait = lambda _: True
     os_api.show = fake_show
-    os_api.git = lambda *args: True
+    os_api.git = lambda *args: "On branch moby-branch"
 
     moby.run_once()
     moby.run_once()
@@ -38,7 +38,7 @@ def _test_happy_path_run_twice():
     verify(result + "\n")
 
 
-def test_moby_branch():
+def test_not_on_moby_branch():
     import os_api
 
     showlines = []
