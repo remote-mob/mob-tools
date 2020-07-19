@@ -3,7 +3,7 @@ from approvaltests import verify
 import moby
 
 
-def test_happy_path():
+def _test_happy_path():
     import os_api
 
     showlines = []
@@ -20,7 +20,7 @@ def test_happy_path():
     verify(result + "\n")
 
 
-def test_happy_path_run_twice():
+def _test_happy_path_run_twice():
     import os_api
 
     showlines = []

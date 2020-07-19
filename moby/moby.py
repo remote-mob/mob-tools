@@ -19,6 +19,10 @@ def all_good():
     os_api.show("Branch is pristine, good.\n")
 
 
+def branch_ok():
+    return False
+
+
 def five_first_minutes():
     for minute in [6, 5, 4, 3, 2]:
         os_api.show(f"{minute} minutes left until switch.\n")
