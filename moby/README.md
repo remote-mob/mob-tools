@@ -46,3 +46,23 @@ Repo updated.
 Waiting 5 seconds.
 ...
 ```
+
+
+Dependencies and platforms
+--------------------------
+
+Built to be run on "the big three": MacOSX, Windows, Linux.
+
+Depends on Python3.6+ available on system.
+
+
+Install and use
+---------------
+Install: Clone this repo.
+
+Use:
+
+    cd /path/to/gitrepo_to_mob_on
+    git co -b moby-branch
+    python3 /path/to/moby/moby.py
+
