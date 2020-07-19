@@ -21,11 +21,11 @@ def all_good():
 
 def branch_ok():
     output = os_api.git("status")
+    os_api.show(output)
     if output.splitlines()[0] != "On branch moby-branch":
         os_api.show('Branch is not "moby-branch", halt.\n')
         return False
-    else:
-        return True
+    return True
 
 
 def five_first_minutes():
@@ -67,5 +67,6 @@ def sync():
 
 
 if __name__ == "__main__":
-    while True:
-        run_once()
+    while run_once():
+        pass
+
