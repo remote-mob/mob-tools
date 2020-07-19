@@ -5,7 +5,3 @@ repl-temp-*
 # lamdera stuff
 lamdera-stuff
 /node_modules/
-
-# python stuff
-__pycache__/
-.venv/
