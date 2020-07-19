@@ -4,7 +4,8 @@ import os_api
 
 
 def run_once():
-    all_good()
+    if not all_good():
+        return False
     five_first_minutes()
     last_minute()
 
@@ -12,6 +13,8 @@ def run_once():
 def all_good():
     folder_name = Path.cwd().name
     os_api.show(f'Running moby on repo "{folder_name}", good.\n')
+    if not branch_ok():
+        return False
     os_api.show('Branch is "moby-branch", good.\n')
     os_api.show("Branch is pristine, good.\n")
 
