@@ -19,6 +19,8 @@ Each mob member needs to start the script at the beginning of a session, but tha
 
 In case a driver session takes more than 6 minutes, it is a matter of stopping the script locally for the mob members, and re-start the script.
 
+When the mob session is finished or a backlog item has been completed, the mob decides to stop moby and merge the moby-branch (squashing all automatic commit messages) into master with a collaboratively written git message.
+
 Simplicity, grokkability.
 
 Sample output from `moby.py`:
