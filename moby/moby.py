@@ -15,7 +15,6 @@ def all_good():
     os_api.show(f'Running moby on repo "{folder_name}", good.\n')
     if not branch_ok():
         return False
-    os_api.show('Branch is "moby-branch", good.\n')
     os_api.show("Branch is pristine, good.\n")
     return True
 
@@ -25,6 +24,7 @@ def branch_ok():
     if output.splitlines()[0] != "On branch moby-branch":
         os_api.show('Branch is not "moby-branch", halt.\n')
         return False
+    os_api.show('Branch is "moby-branch", good.\n')
     return True
 
 
@@ -69,4 +69,3 @@ def sync():
 if __name__ == "__main__":
     while run_once():
         pass
-
