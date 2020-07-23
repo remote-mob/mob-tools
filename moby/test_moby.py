@@ -10,7 +10,7 @@ def setup_os_api():
     def fake_show(showmsg):
         showlines.append(showmsg)
 
-    os_api.wait = lambda _: True
+    os_api.wait = lambda *args: True
     os_api.show = fake_show
     os_api.git = lambda *args: "On branch moby-branch"
 
