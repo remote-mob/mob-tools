@@ -1,11 +1,11 @@
 Problem
 =======
 
-Generally: handovers take around 1 minute, that a considerable overhead with 6 minute per driver.
+Generally: handovers take around 1 minute, that is a considerable overhead with 6 minute per driver.
 
 * git pull, git push takes time for each driver / switch
 
-* git commit messages vary in quality, and take time and effort to write
+* git commit messages vary in quality, and take time and effort to write (which may or may not be wanted during a session)
 
 * the method to measure time has varied a lot; sometimes mobile phones, sometimes online timers (including our own lamdera based) or even been forgotten altogether. In any case, this steals energy and time every session. So let's add another method :D
 
