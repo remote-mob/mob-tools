@@ -15,7 +15,9 @@ def all_good():
     os_api.show(f'Running moby on repo "{folder_name}", good.\n')
     if not branch_ok():
         return False
-    os_api.show("Branch is pristine, good.\n")
+    # TODO: implement --porcelain check; see e.g
+    # https://stackoverflow.com/questions/5139290/how-to-check-if-theres-nothing-to-be-committed-in-the-current-branch
+    # os_api.show("Branch is pristine, good.\n")
     return True
 
 

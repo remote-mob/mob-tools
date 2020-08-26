@@ -1,6 +1,5 @@
 Running moby on repo "moby", good.
 Branch is "moby-branch", good.
-Branch is pristine, good.
 6 minutes left until switch.
 ......
 5 minutes left until switch.
@@ -25,7 +24,6 @@ Branch is pristine, good.
  ****************************
 Running moby on repo "moby", good.
 Branch is "moby-branch", good.
-Branch is pristine, good.
 6 minutes left until switch.
 ......
 5 minutes left until switch.
