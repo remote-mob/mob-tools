@@ -15,7 +15,7 @@ Solution proposition/hypothesis
 
 It is enough to have a Python script that continuously synchronizes the local repo (automates the git pull, add, commit and push commands) and writes timer messages on terminal when it is time to switch driver.
 
-Each mob member needs to start the script at the beginning of a session, but that it all.
+ > Usage: Each mob member needs to start the script at the beginning of a session. That is all.
 
 In case a driver session takes more than 6 minutes, it is a matter of stopping the script locally for the mob members, and re-start the script.
 
